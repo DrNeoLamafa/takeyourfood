@@ -37,9 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'mainblock'
+    'mainblock',
+    'register',
+    'crispy_forms'
 ]
-
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -51,11 +53,12 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'takeyourfood.urls'
-
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+TEMPLATE_DIR = os.path.join(BASE_DIR, "templates")
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATE_DIR, TEMPLATE_DIR + "/register"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -118,4 +121,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/mainblock/templates/'
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    'takeyourfood/static',
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = '/media/'
+
+
+LOGIN_REDIRECT_URL = '/'
