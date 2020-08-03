@@ -1,42 +1,47 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 <!------ Include the above in your HEAD tag ---------->
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
 
 {% load crispy_forms_tags %}
 <div class="container">
-<br>  
-<hr>
+    <br>  
+    <hr>
 
+ 
+       
 
+                <div class="card">
+                    <article class="card-body">
+                        <a href="{% url 'login' %}" class="float-right btn btn-outline-primary">Вход</a>
+                        <h4 class="card-title mb-4 mt-1">Регистрация</h4>
+                        
+                        <hr>
+                        <form method="post" novalidate>
+                            <div class="form-group">
 
+                                
+                                {% csrf_token %}
+                                {{ user_form|crispy }}
+                            <button type="submit">Отправить</button>            
+                            </div> <!-- .row// -->                                                                  
+                        </form>
+                    </article>
+                </div>
+            </div> <!-- card.// -->
 
-<div class="card">
-<article class="card-body">
-	<a href="{% url 'login' %}" class="float-right btn btn-outline-primary">Вход</a>
-	<h4 class="card-title mb-4 mt-1">Регистрация</h4>
+          
+        
+        
+        </div>
+</div>
+
+ 
+
 	
-	<hr>
-	<form method="post" novalidate>
-        <div class="form-group">
-
-            
-            {% csrf_token %}
-             {{ user_form|crispy }}
-        <button type="submit">Отправить</button>            
-        </div> <!-- .row// -->                                                                  
-    </form>
-</article>
-</div> <!-- card.// -->
-
-	</aside> <!-- col.// -->
-	<aside class="col-sm-4">
-
 
 	
 
-</div> 
-
-</html>
