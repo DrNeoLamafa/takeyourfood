@@ -51,4 +51,23 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
 
     objects = UserManager()
+class Client(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    email = models.CharField(max_length=20)
+    name = models.CharField(max_length=20)
+    famil = models.CharField(max_length=20)
+
+class Courier(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    email = models.CharField(max_length=20)
+    name = models.CharField(max_length=20)
+    famil = models.CharField(max_length=20)
+    status = models.BooleanField(default=False)
+    car = models.BooleanField(default=False)
+    
+class Rest(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    email = models.CharField(max_length=20)
+    name_res = models.CharField(max_length=20)
+    addres = models.CharField(max_length=40)
 
