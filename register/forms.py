@@ -2,7 +2,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
-from register.models import User, Rest, Courier
+from register.models import User, Rest, Courier, Client, Food
+
 
 class SignUpForm(UserCreationForm):
   class Meta:
@@ -12,4 +13,25 @@ class SignUpForm(UserCreationForm):
 class LkForm(forms.ModelForm):
   class Meta:
         model = Rest
-        fields = ('email',  'addres')
+        fields = ('name_res',  'addres', 'category', 'discription', 'image')
+        
+  def __init__(self, *args, **kwargs):
+        super(LkForm, self).__init__(*args, **kwargs)
+        self.fields['image'].required = True
+class LkFormClient(forms.ModelForm):
+  class Meta:
+        model = Client
+        fields = ('name',  'famil', 'mobil')
+
+class LkFormCourier(forms.ModelForm):
+  class Meta:
+        model = Courier
+        fields = ('name',  'famil')
+
+class LkFormFood(forms.ModelForm):
+  class Meta:
+        model = Food
+        fields = ('name',  'price', 'category', 'image')
+
+
+

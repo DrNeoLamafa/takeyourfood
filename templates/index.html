@@ -83,14 +83,15 @@
         </div>
     </div>
 </div>
+{%for rest in list%}
 <div class="container text-center my-3">
 <div class="alert alert-success">
   
-    
-        <h1>Привет</h1>
+        <img src="{{rest.img.url}}">
+         {{rest.rest_name}}
     
   </div>
 </div>
-
+{% endfor %}
 </body>
 </html>
