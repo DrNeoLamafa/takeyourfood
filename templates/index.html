@@ -1,6 +1,7 @@
 {% load static %}
 <!doctype html>
 <html lang="en">
+{% block head %}
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -22,30 +23,54 @@
     <!-- Custom styles for this template -->
     
   </head>
+{% endblock head %}
+{% block content %}
   <body>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
-  <a class="navbar-brand" href="#">Top navbar</a>
+    
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+
+  <a class="navbar-brand" href="#">ДоставОчка</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarCollapse">
     <ul class="navbar-nav mr-auto">
+
+
+
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
       </li>
+      {% if request.user.is_authenticated %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'lk' %}">Лк</a>
+
+      </li>
+
+      <li>
+        <img src="{{user.client.image.url}}" class="avatar img-circle img-thumbnail" alt="avatar" width="30" height="30"> 
+      </li>
+      {% else %}
+
       <li class="nav-item">
         <a class="nav-link" href="{% url 'register' %}">Регистрация</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        <a class="nav-link" href="{% url 'login' %}">Вход</a>
       </li>
+      
     </ul>
+    {% endif %}
     <form class="form-inline mt-2 mt-md-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
   </div>
+  
 </nav>
+
+
+
 <div class="container text-center my-3">
   <div class="alert alert-success">
     <h6>Акции</h6>
@@ -83,14 +108,38 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
 {%for rest in list%}
+{% if rest.rest_name != '' %}
 <div class="container text-center my-3">
-<div class="alert alert-success">
-  
-        <img src="{{rest.img.url}}">
-         {{rest.rest_name}}
-    
-  </div>
+
+<div class="featurebox col-md-12 col-sm-12 col-xs-12">
+      <div class="alert alert-success">               
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                    
+                        <div class="feature text-left">
+                            <img src="{{rest.img.url}}" height="256" width="340">
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="feature text-left">
+                           
+                            <h4>{{rest.rest_name}} // {{rest.category}}</h4>
+                            <p>{{rest.discription}}</p> 
+                            <a href="{% url 'foodlist_url' slug=rest.slug %}" class="btn btn-light">Меню</a>
+                            
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+   {% endif %}
+
+
+
 </div>
 {% endfor %}
 </body>

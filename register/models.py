@@ -46,7 +46,8 @@ class User(AbstractUser):
 )
     username = None
     email = models.EmailField(_('Email'), unique=True)
-    role = models.CharField('Тип записи', max_length=20, choices=role, default='green')
+    role = models.CharField('Тип записи', max_length=20, choices=role)
+    
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
@@ -57,6 +58,7 @@ class Client(models.Model):
     name = models.CharField(max_length=20)
     famil = models.CharField(max_length=20)
     mobil = models.CharField(max_length=12)
+    image = models.ImageField(upload_to='', default='logo.jpg')
 
 class Courier(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -73,11 +75,19 @@ class Rest(models.Model):
     addres = models.CharField(max_length=40)
     category = models.CharField(max_length=30)
     discription = models.CharField(max_length=400)
-    image = models.ImageField(upload_to='restname/')
+    image = models.ImageField(upload_to='restname/', default='logo.jpg')
+    slug = models.SlugField(max_length=200)
 
+    def get_absolute_url(self):
+        return reverse('foodlist', kwargr={'slug': self.slug})
+    
+    
+  
 class Food(models.Model):
     rest = models.ForeignKey(Rest, on_delete=models.CASCADE)
     name = models.CharField(max_length=20)
     price = models.IntegerField()
     category = models.CharField(max_length=20)
     image = models.ImageField(upload_to='food/')
+
+    

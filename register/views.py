@@ -4,6 +4,7 @@ from .forms import SignUpForm, LkForm, LkFormClient, LkFormCourier, LkFormFood
 from .models import User, UserManager, Client, Courier, Rest, Food
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
+from django.template.defaultfilters import slugify
 
 def register(request):
     if request.method == 'POST':
@@ -34,6 +35,7 @@ def register(request):
                 new_client.email = request.POST.get("email")
                 new_client.save()
                 new_user.rest = new_client
+                
                 new_user.save()
             return redirect('login')
     else:
@@ -49,18 +51,19 @@ def LkRender(request):
         courier_form = LkFormCourier()
         client_form = LkFormClient()
         rest_form = LkForm()
+
         if 'dataform' in request.POST:
             courier_form = LkFormCourier()
             client_form = LkFormClient()
             rest_form = LkForm()
-            
+            food_form = LkFormFood()
             if (user.role =='Cour'):
                 courier_form = LkFormCourier(request.POST)
             if (user.role =='client'):
-                client_form = LkFormClient(request.POST)
+                client_form = LkFormClient(request.POST, request.FILES)
             if (user.role =='REST'):   
                 rest_form = LkForm(request.POST, request.FILES)
-                food_form = LkFormFood()
+                
             if courier_form.is_valid():
             
                 courier = user.courier
@@ -69,11 +72,12 @@ def LkRender(request):
                 courier.status = 1
                 courier.save()
             if client_form.is_valid():
-            
+
                 client = user.client
                 client.name = request.POST.get("name")
                 client.famil = request.POST.get("famil")
                 client.mobil = request.POST.get("mobil")
+                client.image = client_form.cleaned_data['image']
                 client.save()
             if rest_form.is_valid():
               
@@ -83,6 +87,7 @@ def LkRender(request):
                 rest.category = request.POST.get("category")
                 rest.discription = request.POST.get("discription")
                 rest.image = rest_form.cleaned_data['image']
+                rest.slug = slugify(rest.name_res)
                 rest.save()
            
         elif 'foodform' in request.POST:

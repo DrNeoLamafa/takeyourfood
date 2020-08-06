@@ -19,9 +19,13 @@ class LkForm(forms.ModelForm):
         super(LkForm, self).__init__(*args, **kwargs)
         self.fields['image'].required = True
 class LkFormClient(forms.ModelForm):
-  class Meta:
-        model = Client
-        fields = ('name',  'famil', 'mobil')
+      class Meta:
+            model = Client
+            fields = ('name',  'famil', 'mobil', 'image')
+
+      def __init__(self, *args, **kwargs):
+            super(LkFormClient, self).__init__(*args, **kwargs)
+            self.fields['image'].required = True
 
 class LkFormCourier(forms.ModelForm):
   class Meta:

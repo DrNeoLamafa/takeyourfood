@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 from django.utils.translation import ugettext_lazy as _
-from .models import User, Client, Courier, Rest
+from .models import User, Client, Courier, Rest, Food
 
 
 @admin.register(User)
@@ -44,4 +44,12 @@ class RestAdmin(admin.ModelAdmin):
     list_display = ['email', 'name_res', 'addres', 'category', 'discription']
     list_filter = ['user', 'name_res' ]
     search_fields = ['addres', 'name_res']
+    
+
+@admin.register(Food)
+class FoodAdmin(admin.ModelAdmin):
+    list_display = ['rest', 'name', 'price', 'category', 'image']
+    list_filter = ['name', 'rest' ]
+    search_fields = ['name', 'rest']
+    
   
