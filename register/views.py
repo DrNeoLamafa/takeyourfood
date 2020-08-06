@@ -49,11 +49,11 @@ def LkRender(request):
         courier_form = LkFormCourier()
         client_form = LkFormClient()
         rest_form = LkForm()
-        if ('lkform' in request.POST) | ('lkformcourier' in request.POST) | ('lkformclient' in request.POST):
+        if 'dataform' in request.POST:
             courier_form = LkFormCourier()
             client_form = LkFormClient()
             rest_form = LkForm()
-            print(6)
+            
             if (user.role =='Cour'):
                 courier_form = LkFormCourier(request.POST)
             if (user.role =='client'):
@@ -76,7 +76,7 @@ def LkRender(request):
                 client.mobil = request.POST.get("mobil")
                 client.save()
             if rest_form.is_valid():
-                print(4)
+              
                 rest = user.rest
                 rest.name_res = request.POST.get("name_res")
                 rest.addres = request.POST.get("addres")
@@ -90,7 +90,7 @@ def LkRender(request):
             courier_form = LkFormCourier()
             client_form = LkFormClient()
             rest_form = LkForm()
-            print(1)
+          
             if food_form.is_valid():
                 food = Food()
                 food.name = request.POST.get("name")
@@ -106,32 +106,8 @@ def LkRender(request):
         client_form = LkFormClient()
         rest_form = LkForm()
         food_form = LkFormFood()
-        #FoodRender(request)
+     
     return render(request, 'lk.html', {'lkform': rest_form, 'lkformcourier': courier_form, 'lkformclient': client_form, 'foodform': food_form })
 
 
 
-@login_required
-def FoodRender(request):
-    user = User.objects.get(pk=request.user.pk)
-
-    if request.method == 'POST':
-      
-        
-       
-        food_form = LkFormFood(request.POST, request.FILES)
-    
-        if food_form.is_valid():
-            food = Food()
-            food.name = request.POST.get("name")
-            food.category = request.POST.get("category")
-            food.price = request.POST.get("price")
-            food.image = food_form.cleaned_data['image']
-            #rest.food_set.add(food, bulk =False)
-            rest.save()
-            food.save()
-            print(3)
-    else:
-        
-        food_form = LkFormFood()
-    return render(request, 'lk.html', {'lkform': rest_form, 'lkformcourier': courier_form, 'lkformclient': client_form, 'foodform': food_form })
